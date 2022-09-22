@@ -1,0 +1,30 @@
+<%- include ("../../partials/header.ejs"); %>
+<body>
+    <%- include ("../../partials/nav.ejs"); %>
+    <div class="container">
+        <div class="card" id="marg">
+            <div class="card-header">
+                <form method="POST" action="/polls/update">
+                    <h3>Edição de enquete</h3>
+                    <input class="form-control" type="text" placeholder="<%= polls.title%>" name="title" required>
+                    <br>
+                    <input class="form-control"  type="text" placeholder="<%= polls.option1%>" name="option1" required>
+                    <br>
+                    <input class="form-control"  type="text" placeholder="<%= polls.option2%>" name="option2" required>
+                    <br>
+                    <input class="form-control"  type="text" placeholder="<%= polls.option3%>" name="option3" required>
+                    <br>
+                    <label>Data de Inicio</label>
+                    <input class="form-control" type="date" name="init" required>
+                    <br>
+                    <label>Data de Termino</label>
+                    <input class="form-control" type="date" name="end" required>
+                    <br>
+                    <input type="hidden" name="id" value="<%= polls.id %>">
+                    <button class="btn btn-success">Alterar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include ("../../partials/footer.ejs"); %>

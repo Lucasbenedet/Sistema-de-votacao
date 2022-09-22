@@ -1,0 +1,59 @@
+<%- include ("partials/header.ejs"); %>
+<body>
+    <%- include ("partials/nav.ejs"); %>
+    <div class="container">
+        <div class="card" id="marg">
+            <div class="card-header">
+                <h3>Crie sua Enquete</h3>
+                <hr>
+                <a href="/admin/polls/new" class="btn btn-primary">Criar</a>
+            </div>
+            <div class="card-body">
+                <% polls.forEach(polls =>{%>
+                    <h3><%= polls.title %></h3>
+                    <br>
+                    <% if(polls.end <= date){%>
+                        <span>Votação encerrada</span>
+                        <hr>
+                        <a href="/admin/answers/vote/<%= polls.id %>" class="btn btn-primary">Visualizar Resultado</a>
+                        <form method="POST" action="/polls/delete" style="display: inline;" onsubmit="confirmarDelecao(event, this)">
+                            <input type="hidden" name="id" value="<%= polls.id %>"></input>
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    <%}else if(polls.init >= date){%>
+                        <span>Votação não iniciada</span>
+                        <hr>
+                        <a href="/admin/polls/edit/<%= polls.id %>" class="btn btn-warning">Editar</a>
+                        <form method="POST" action="/polls/delete" style="display: inline;" onsubmit="confirmarDelecao(event, this)">
+                            <input type="hidden" name="id" value="<%= polls.id %>"></input>
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    <%}else{%>
+                        <span>Iniciada em <%= polls.init %> </span>
+                        <br>
+                        <span>Será encerrada em <%= polls.end %> </span>
+                        <br>
+                        <hr>
+                        <a href="/admin/answers/vote/<%= polls.id %>" class="btn btn-primary">Visualizar</a>
+                        <a href="/admin/polls/edit/<%= polls.id %>" class="btn btn-warning">Editar</a>
+                        <form method="POST" action="/polls/delete" style="display: inline;" onsubmit="confirmarDelecao(event, this)">
+                        <input type="hidden" name="id" value="<%= polls.id %>"></input>
+                        <button class="btn btn-danger">Deletar</button>
+                        </form>
+                        <hr>
+                    <%}%>
+                <%})%>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include ("partials/footer.ejs"); %>
+<script>
+    function confirmarDelecao(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar este artigo?");
+        if(decision){
+            form.submit();
+        }
+    };
+</script>
